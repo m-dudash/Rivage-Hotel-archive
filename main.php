@@ -282,21 +282,21 @@
       <!--FORMULAR -->
       <div class="otazky">
         <p class="thm">MATE OTAZKY?</p>
-        <form action="idk" id="otazky">
+        <form action="questions.php" id="otazky" method="post">
           <div>
             <label for="name">MENO:</label>
-            <input class="inp" type="text" id="name" required />
+            <input class="inp" type="text" id="name" name="name" required />
             <br /><br /><br />
             <label for="mail">MAIL:</label>
-            <input class="inp" type="email" id="mail" required />
+            <input class="inp" type="email" id="mail" name="mail" required />
             <br /><br /><br />
             <label for="mobile">ČÍSLO:</label>
-            <input class="inp" type="tel" id="mobile" required />
+            <input class="inp" type="tel" id="mobile" name="mobile" required />
             <br /><br /><br />
             <input type="checkbox" id="agree" required />
             <label for="agree">SÚHLASÍM SO SPRACOVANÍM OSOBNÝCH ÚDAJOV</label>
             <br /><br /><br />
-            <button>SUBMIT</button>
+            <button type="submit">SUBMIT</button>
           </div>
         </form>
         <!--MODAL WINDOW -->
