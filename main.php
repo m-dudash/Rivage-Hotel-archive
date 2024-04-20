@@ -17,93 +17,49 @@
   </head>
   <body>
     <!-- HEADER -->
-    <header style="position: fixed; z-index: 1">
-      <nav
-        class="navbar navbar-expand-lg navbar-light"
-        style="position: fixed; z-index: 1; width: 100%"
-      >
-        <div class="container-fluid">
-          <a href="#main" class="nav-logo">
-            <img src="img/logo.png" alt="logo" class="nav-logo" />
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link" aria-current="page" href="#about"
-                >|&nbsp;O&nbsp;nás</a
-              >
-              <a class="nav-link" aria-current="page" href="#gallery"
-                >|&nbsp;Galéria</a
-              >
-              <a class="nav-link" aria-current="page" href="#reviews"
-                >|&nbsp;Recenzie</a
-              >
-              <a class="nav-link" aria-current="page" href="faq.html"
-                >|&nbsp;FAQ</a
-              >
-              <span></span>
-              <a aria-current="page" href="reservation.html" class="nav-link">
-                <span class="RB" style="position: absolute; right: 10%"
-                  >| Reservation</span
-                ></a
-              >
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
+<?php include 'components/header.php'?>
 
     <main>
       <!-- KREATIVNE === COOKIES MODAL -->
-      <div class="modalcookies" id="cookieModal">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" style="margin-left: 30px">Cookies</h5>
-            </div>
-            <div class="modal-body">
-              <p
-                style="
-                  display: flex;
-                  align-items: center;
-                  margin-left: 30px;
-                  margin-right: 30px;
-                "
-              >
-                Používame cookies na zlepšenie vášho zážitku na našej stránke.
-                Pokračovaním súhlasíte s našou politikou ochrany údajov.
-              </p>
-              <img src="img\cookie.png" alt="cookie" />
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="acceptCookies()"
-              >
-                Accept
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="rejectCookies()"
-              >
-                Reject
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--      <div class="modalcookies" id="cookieModal">-->
+<!--        <div class="modal-dialog modal-dialog-centered">-->
+<!--          <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--              <h5 class="modal-title" style="margin-left: 30px">Cookies</h5>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--              <p-->
+<!--                style="-->
+<!--                  display: flex;-->
+<!--                  align-items: center;-->
+<!--                  margin-left: 30px;-->
+<!--                  margin-right: 30px;-->
+<!--                "-->
+<!--              >-->
+<!--                Používame cookies na zlepšenie vášho zážitku na našej stránke.-->
+<!--                Pokračovaním súhlasíte s našou politikou ochrany údajov.-->
+<!--              </p>-->
+<!--              <img src="img\cookie.png" alt="cookie" />-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--              <button-->
+<!--                type="button"-->
+<!--                class="btn btn-primary"-->
+<!--                onclick="acceptCookies()"-->
+<!--              >-->
+<!--                Accept-->
+<!--              </button>-->
+<!--              <button-->
+<!--                type="button"-->
+<!--                class="btn btn-secondary"-->
+<!--                onclick="rejectCookies()"-->
+<!--              >-->
+<!--                Reject-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <!-- BANNER -->
       <div class="container" id="main" style="padding-top: 40px">
         <div class="centered">THE BEST AMSTERDAM HOTEL</div>
@@ -165,7 +121,7 @@
 
       <br /><br />
       <div style="display: flex; justify-content: center">
-        <a href="gallery.html" target="_blank"
+        <a href="gallery.php" target="_blank"
           ><button class="more">MORE</button>
         </a>
       </div>
@@ -282,103 +238,35 @@
       <!--FORMULAR -->
       <div class="otazky">
         <p class="thm">MATE OTAZKY?</p>
-        <form action="questions.php" id="otazky" method="post">
-          <div>
-            <label for="name">MENO:</label>
-            <input class="inp" type="text" id="name" name="name" required />
-            <br /><br /><br />
-            <label for="mail">MAIL:</label>
-            <input class="inp" type="email" id="mail" name="mail" required />
-            <br /><br /><br />
-            <label for="mobile">ČÍSLO:</label>
-            <input class="inp" type="tel" id="mobile" name="mobile" required />
-            <br /><br /><br />
-            <input type="checkbox" id="agree" required />
-            <label for="agree">SÚHLASÍM SO SPRACOVANÍM OSOBNÝCH ÚDAJOV</label>
-            <br /><br /><br />
-            <button type="submit">SUBMIT</button>
-          </div>
-        </form>
-        <!--MODAL WINDOW -->
-        <div class="modal" tabindex="-1" id="success-otazky">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">FORM</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <p>Formulár bol úspešne odoslaný</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
+        <form action="engineOOP.php" id="otazky" method="post">
+            <div>
+                <label for="meno">MENO:</label>
+                <input class="inp" type="text" id="meno" name="meno" required />
+                <br /><br /><br />
+                <label for="mail">MAIL:</label>
+                <input class="inp" type="email" id="mail" name="mail" required />
+                <br /><br /><br />
+                <label for="mobile">ČÍSLO:</label>
+                <input class="inp" type="tel" id="mobile" name="mobile" required />
+                <br /><br /><br />
+                <input type="checkbox" id="agree" required />
+                <label for="agree">SÚHLASÍM SO SPRACOVANÍM OSOBNÝCH ÚDAJOV</label>
+                <br /><br /><br />
+                <button type="submit">SUBMIT</button>
             </div>
-          </div>
-        </div>
-
-        <script src="script.js"></script>
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossorigin="anonymous"
-        ></script>
-        <!-- SCRIPT PRE FORMU -->
-        <script>
-          document
-            .querySelector("#otazky")
-            .addEventListener("submit", function (event) {
-              event.preventDefault();
-              var myModal = new bootstrap.Modal(
-                document.querySelector("#success-otazky")
-              );
-              myModal.show();
-            });
-     
-        </script>
+        </form>
       </div>
-      <br /><br /><br /><br /><br /><br /><br /><br />
-      <p class="thm" style="font-size: 200%">
-        You are always welcome at the Rivage Hotel
-      </p>
-      <br /><br /><br /><br /><br /><br /><br /><br />
+    
     </main>
+    <div>
+        <br /><br /><br /><br /><br /><br /><br /><br />
+        <p class="thm" style="font-size: 200%">
+            You are always welcome at the Rivage Hotel
+        </p>
+        <br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
     <!-- FOOTER -->
-    <footer>
-      <img src="img/logoW.png" alt="Rivage Hotel" class="padding-logo" />
-      <img src="img/brand.png" alt="Rivage Hotel" class="padding-logo" />
-      <div class="adress">
-        <p>Museumstraat 1, Amsterdam, Netherlands</p>
-        <br />
-        <p>+380 98 976 2400</p>
-        <p>D. Portashka</p>
-      </div>
-      <div class="foot-a">
-        <a href="#reviews">|&nbsp;Recenzie</a>
-        <a href="#about">|&nbsp;O&nbsp;nás</a>
-        <a href="gallery.html" target="_blank">|&nbsp;Galéria</a>
-        <a href="faq.html">|&nbsp;FAQ</a>
-      </div>
-      <div class="foot-a">
-        <a href="mailto:mykhailo@dudash.ukf"
-          ><img src="img/mail.png" alt="" class="pics" style="width: 40px"
-        /></a>
-        <a href="tel:+380989762400">
-          <img src="img/tel.png" alt="" class="pics" style="width: 40px"
-        /></a>
-      </div>
-    </footer>
+    <?php include 'components/footer.php'?>
     <!-- BOOTSTRAP SCRIPT-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
