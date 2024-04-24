@@ -37,6 +37,19 @@ class formEngine {
             echo "Nespvane zadane data";
         }
     }
+    public function update($id, $meno, $email, $mobile) {
+        $sql = "UPDATE otazky SET meno = :meno, mail = :mail, mobile = :mobile WHERE id = :id";
+        $statement = $this->conn->prepare($sql);
+
+        $update = $statement->execute(array(':id' => $id, ':meno' => $meno, ':mail' => $email, ':mobile' => $mobile));
+
+        if ($update) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function __destruct() {
         $this->conn = null;

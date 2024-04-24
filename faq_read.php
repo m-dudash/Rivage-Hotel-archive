@@ -17,4 +17,11 @@ class QnaEngine{
         mysqli_free_result($result);
         return $qna_data;
     }
+    public function updateQuestionAndAnswer($qna_id, $question, $answer) {
+        $connection = $this->db->getConnection();
+        $stmt = $connection->prepare("UPDATE qna_table SET question = ?, answer = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $question, $answer, $qna_id);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
