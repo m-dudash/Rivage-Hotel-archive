@@ -17,14 +17,13 @@ class formEngine {
     }
 
     public function send() {
-        $question = filter_input(INPUT_POST, 'question', FILTER_SANITIZE_SPECIAL_CHARS);
-        $answer = filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_SPECIAL_CHARS);
+        $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if ($question !== false && $answer !== false) {
-            $sql = "INSERT INTO faq (question, answer) VALUES (:question, :answer)";
+        if ($mobile !== false) {
+            $sql = "INSERT INTO gift (mobile) VALUES (:mobile)";
             $statement = $this->conn->prepare($sql);
 
-            $insert = $statement->execute(array(':question' => $question, ':answer' => $answer));
+            $insert = $statement->execute(array(':mobile' => $mobile));
 
             if ($insert) {
                 header("Location: http://localhost/rivageHotel/faq.php");

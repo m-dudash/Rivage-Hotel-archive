@@ -9,7 +9,7 @@ class QnaDeleter {
     }
 
     public function deleteQna($id) {
-        $delete_query = "DELETE FROM qna_table WHERE id = $id";
+        $delete_query = "DELETE FROM faq WHERE id = $id";
         $delete_result = mysqli_query($this->db_connection, $delete_query);
 
         if ($delete_result) {
@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Подключаемся к базе данных
-    $db_connection = mysqli_connect("localhost", "root", "", "qna_db");
+    $db_connection = mysqli_connect("localhost", "root", "", "rivage_db");
 
     if (mysqli_connect_errno()) {
         echo "Chyba: " . mysqli_connect_error();

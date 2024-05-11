@@ -1,27 +1,43 @@
 <?php
-// verzia v OOP
 
-class QnaEngine{
-    private $db_connection;
-    public function __construct($db_connection)
-    {
-        $this->db_connection = $db_connection;
-    }
-    public function getQuestionsAndAnswers(){
-        $query= "SELECT id, question, answer FROM qna_table";
-        $result= mysqli_query($this->db_connection, $query);
-        $qna_data = [];
-        while ($row= mysqli_fetch_assoc($result) ){
-            $qna_data[]= $row;
+class QnaEngine {
+    private $host = "localhost";
+    private $dbname = "rivage_db";
+    private $port = 3306;
+    private $username = "root";
+    private $password = "";
+    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
+    private $conn;
+
+    public function __construct() {
+        try {
+            // Устанавливаем соединение с базой данных
+            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
+        } catch (PDOException $e) {
+            // Если произошла ошибка при подключении, выводим сообщение об ошибке и завершаем скрипт
+            die("Ошибка подключения к базе данных: " . $e->getMessage());
         }
-        mysqli_free_result($result);
+    }
+
+    public function getQuestionsAndAnswers(){
+        // Выполняем запрос к базе данных для получения вопросов и ответов
+        $query = "SELECT id, question, answer FROM faq";
+        $result = $this->conn->query($query);
+
+        // Обрабатываем результат запроса и формируем массив с вопросами и ответами
+        $qna_data = [];
+        while ($row = $result->fetch()) {
+            $qna_data[] = $row;
+        }
+
         return $qna_data;
     }
+
     public function updateQuestionAndAnswer($qna_id, $question, $answer) {
-        $connection = $this->db->getConnection();
-        $stmt = $connection->prepare("UPDATE qna_table SET question = ?, answer = ? WHERE id = ?");
-        $stmt->bind_param("ssi", $question, $answer, $qna_id);
-        $stmt->execute();
-        $stmt->close();
+        // Подготавливаем запрос на обновление вопроса и ответа в базе данных
+        $stmt = $this->conn->prepare("UPDATE faq SET question = ?, answer = ? WHERE id = ?");
+        $stmt->execute([$question, $answer, $qna_id]);
     }
 }
+
+?>

@@ -37,16 +37,17 @@
                 class="inp"
                 placeholder="Zadajte svoj e-mail alebo telefónne číslo"
               />
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                        onclick="acceptDarcek()"
+                >
+                    Prijať
+                </button>
             </form>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="acceptDarcek()"
-            >
-              Prijať
-            </button>
+
             <button
               type="button"
               class="btn btn-secondary"
