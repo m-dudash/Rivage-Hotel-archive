@@ -1,14 +1,31 @@
 <?php
-require_once 'userEngine.php';
+require_once 'UserEngine.php';
 
-$userEngine = new UserEngine();
+class Registration {
+    private $userEngine;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['mail'];
-    $password = $_POST['pass'];
-    $password2 = $_POST['pass2'];
+    public function __construct() {
+        $this->userEngine = new UserEngine();
+    }
 
-    $result = $userEngine->register($email, $password, $password2);
-    echo $result;
+    public function handleRegistration() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $email = $_POST['mail'];
+            $password = $_POST['pass'];
+            $password2 = $_POST['pass2'];
+
+            $result = $this->userEngine->register($email, $password, $password2);
+
+            if ($result === "Success") {
+                header("Location: main.php");
+                exit();
+            } else {
+                echo $result;
+            }
+        }
+    }
 }
+
+$registration = new Registration();
+$registration->handleRegistration();
 ?>

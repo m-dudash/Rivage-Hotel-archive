@@ -13,8 +13,10 @@ class UserEngine {
         try {
             // Устанавливаем соединение с базой данных
             $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
-            // Начинаем сессию
-            session_start();
+            // Начинаем сессию, если она ещё не была начата
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
         } catch (PDOException $e) {
             // Если произошла ошибка при подключении, выводим сообщение об ошибке и завершаем скрипт
             die("Ошибка подключения к базе данных: " . $e->getMessage());
@@ -51,6 +53,20 @@ class UserEngine {
             return "Login successful!";
         } else {
             return "Invalid email or password!";
+        }
+    }
+    public function updatePassword($email, $new_password) {
+        // Хешируем новый пароль
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+        // Обновляем пароль в базе данных
+        $query = "UPDATE users SET password = ? WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        try {
+            $stmt->execute([$hashed_password, $email]);
+            return "Success";
+        } catch (PDOException $e) {
+            return "Error: " . $e->getMessage();
         }
     }
 
