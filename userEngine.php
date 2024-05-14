@@ -13,6 +13,8 @@ class UserEngine {
         try {
             // Устанавливаем соединение с базой данных
             $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
+            // Начинаем сессию
+            session_start();
         } catch (PDOException $e) {
             // Если произошла ошибка при подключении, выводим сообщение об ошибке и завершаем скрипт
             die("Ошибка подключения к базе данных: " . $e->getMessage());
@@ -26,7 +28,7 @@ class UserEngine {
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO user (email, password) VALUES (?, ?)";
+        $query = "INSERT INTO users (email, password) VALUES (?, ?)";
         $stmt = $this->conn->prepare($query);
         try {
             $stmt->execute([$email, $hashed_password]);
@@ -37,16 +39,35 @@ class UserEngine {
     }
 
     public function login($email, $password) {
-        $query = "SELECT id, password FROM user WHERE email = ?";
+        $query = "SELECT id, password FROM users WHERE email = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
+            // Устанавливаем сессию
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $email;
             return "Login successful!";
         } else {
             return "Invalid email or password!";
         }
+    }
+
+    public function isLoggedIn() {
+        return isset($_SESSION['user_id']);
+    }
+
+    public function redirectToMainIfLoggedIn() {
+        if ($this->isLoggedIn()) {
+            header("Location: main.php");
+            exit();
+        }
+    }
+
+    public function logout() {
+        session_unset();
+        session_destroy();
     }
 }
 ?>
