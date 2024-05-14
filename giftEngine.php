@@ -26,7 +26,7 @@ class formEngine {
             $insert = $statement->execute(array(':mobile' => $mobile));
 
             if ($insert) {
-                header("Location: http://localhost/rivageHotel/faq.php");
+                header("Location: http://localhost/rivageHotel/main.php");
                 exit;
             } else {
                 echo "CHYBA";

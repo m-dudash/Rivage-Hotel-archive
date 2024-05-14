@@ -220,7 +220,7 @@
 <div>
     <br /><br /><br /><br /><br /><br /><br /><br />
     <p class="thm" style="font-size: 200%">
-        You are always welcome at the Rivage Hotel, <?php echo htmlspecialchars($user_email); ?>
+        You are always welcome at the Rivage Hotel
     </p>
     <br /><br /><br /><br /><br /><br /><br /><br />
 </div>

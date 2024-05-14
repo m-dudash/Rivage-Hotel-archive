@@ -31,10 +31,11 @@
               na dovolenku v centre Amsterdamu v Rivage Hotel v pohodlí a
               harmónii.
             </p>
-            <form action="">
+            <form action="giftEngine.php", method="post">
               <input
                 type="text"
                 class="inp"
+                name="mobile"
                 placeholder="Zadajte svoj e-mail alebo telefónne číslo"
               />
                 <button
