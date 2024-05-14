@@ -1,3 +1,32 @@
+<?php
+// Подключение к базе данных
+$db_connection = mysqli_connect("localhost", "root", "", "rivage_db");
+
+if (mysqli_connect_errno()) {
+    echo "Chyba: " . mysqli_connect_error();
+    exit();
+}
+
+// Получение идентификатора вопроса из параметра GET
+$id = $_GET['id'];
+
+// Получение данных о вопросе из базы данных
+$query = "SELECT * FROM faq WHERE id = $id";
+$result = mysqli_query($db_connection, $query);
+
+if ($result) {
+    // Извлечение данных
+    $row = mysqli_fetch_assoc($result);
+    $question = $row['question'];
+    $answer = $row['answer'];
+} else {
+    // Обработка ошибки
+    echo "Error: " . mysqli_error($db_connection);
+}
+
+// Закрытие соединения с базой данных
+mysqli_close($db_connection);
+?>
 <!DOCTYPE html>
 <html lang="sk">
 <head>
@@ -23,10 +52,10 @@
             <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
             <div>
                 <label for="question">UPDATE QUESTION:</label>
-                <input class="inp" type="text" id="question" name="question" required />
+                <input class="inp" type="text" id="question" name="question" value="<?php echo $question; ?>" required />
                 <br /><br />
                 <label for="answer">UPDATE ANSWER:</label>
-                <input class="inp" type="text" id="answer" name="answer" required />
+                <input class="inp" type="text" id="answer" name="answer" value="<?php echo $answer; ?>" required />
                 <br /><br />
                 <button type="submit">POST</button>
             </div>
