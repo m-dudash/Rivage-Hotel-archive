@@ -1,25 +1,18 @@
 <?php
 
+require_once 'Database.php';
+
 class UserEngine {
-    private $host = "localhost";
-    private $dbname = "rivage_db";
-    private $port = 3306;
-    private $username = "root";
-    private $password = "";
-    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
     private $conn;
 
     public function __construct() {
-        try {
-            // Устанавливаем соединение с базой данных
-            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
-            // Начинаем сессию, если она ещё не была начата
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-        } catch (PDOException $e) {
-            // Если произошла ошибка при подключении, выводим сообщение об ошибке и завершаем скрипт
-            die("Ошибка подключения к базе данных: " . $e->getMessage());
+        // Создаем экземпляр класса Database для подключения к базе данных
+        $db = new Database();
+        $this->conn = $db->getConnection();
+
+        // Начинаем сессию, если она ещё не была начата
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
     }
 
@@ -32,19 +25,27 @@ class UserEngine {
 
         $query = "INSERT INTO users (email, password) VALUES (?, ?)";
         $stmt = $this->conn->prepare($query);
-        try {
-            $stmt->execute([$email, $hashed_password]);
+        if ($stmt === false) {
+            return "Prepare failed: " . $this->conn->error;
+        }
+        $stmt->bind_param("ss", $email, $hashed_password);
+        if ($stmt->execute()) {
             return "Registration successful!";
-        } catch (PDOException $e) {
-            return "Error: " . $e->getMessage();
+        } else {
+            return "Error: " . $stmt->error;
         }
     }
 
     public function login($email, $password) {
         $query = "SELECT id, password FROM users WHERE email = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
+        if ($stmt === false) {
+            return "Prepare failed: " . $this->conn->error;
+        }
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
         if ($user && password_verify($password, $user['password'])) {
             // Устанавливаем сессию
@@ -55,6 +56,7 @@ class UserEngine {
             return "Invalid email or password!";
         }
     }
+
     public function updatePassword($email, $new_password) {
         // Хешируем новый пароль
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -62,11 +64,14 @@ class UserEngine {
         // Обновляем пароль в базе данных
         $query = "UPDATE users SET password = ? WHERE email = ?";
         $stmt = $this->conn->prepare($query);
-        try {
-            $stmt->execute([$hashed_password, $email]);
+        if ($stmt === false) {
+            return "Prepare failed: " . $this->conn->error;
+        }
+        $stmt->bind_param("ss", $hashed_password, $email);
+        if ($stmt->execute()) {
             return "Success";
-        } catch (PDOException $e) {
-            return "Error: " . $e->getMessage();
+        } else {
+            return "Error: " . $stmt->error;
         }
     }
 
@@ -84,6 +89,10 @@ class UserEngine {
     public function logout() {
         session_unset();
         session_destroy();
+    }
+
+    public function __destruct() {
+        $this->conn->close(); // Закрываем соединение с базой данных
     }
 }
 ?>

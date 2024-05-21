@@ -1,31 +1,29 @@
 <?php
-class formEngine {
-    private $host = "localhost";
-    private $dbname = "rivage_db";
-    private $port = 3306;
-    private $username = "root";
-    private $password = "";
-    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
-    private $conn;
+require_once 'Database.php';
 
-    public function __construct() {
-        try {
-            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
-        } catch (PDOException $e) {
-            die("Chyba pripojenia: " . $e->getMessage());
-        }
+// Класс для работы с формой
+class FormEngine {
+    private $db;
+
+    public function __construct($db) {
+        $this->db = $db;
     }
 
     public function send() {
+        $conn = $this->db->getConnection();
+
         $meno = filter_input(INPUT_POST, 'meno', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'mail', FILTER_VALIDATE_EMAIL);
         $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if ($meno !== false && $email !== false && $mobile !== false) {
-            $sql = "INSERT INTO otazky (meno, mail, mobile) VALUES (:meno, :mail, :mobile)";
-            $statement = $this->conn->prepare($sql);
+            // Подготовка запроса
+            $sql = "INSERT INTO otazky (meno, mail, mobile) VALUES (?, ?, ?)";
+            $statement = $conn->prepare($sql);
 
-            $insert = $statement->execute(array(':meno' => $meno, ':mail' => $email, ':mobile' => $mobile));
+            // Привязка параметров и выполнение запроса
+            $statement->bind_param("sss", $meno, $email, $mobile);
+            $insert = $statement->execute();
 
             if ($insert) {
                 header("Location: http://localhost/rivageHotel/thanks.php");
@@ -37,25 +35,14 @@ class formEngine {
             echo "Nespvane zadane data";
         }
     }
-    public function update($id, $meno, $email, $mobile) {
-        $sql = "UPDATE otazky SET meno = :meno, mail = :mail, mobile = :mobile WHERE id = :id";
-        $statement = $this->conn->prepare($sql);
-
-        $update = $statement->execute(array(':id' => $id, ':meno' => $meno, ':mail' => $email, ':mobile' => $mobile));
-
-        if ($update) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public function __destruct() {
-        $this->conn = null;
-    }
 }
-$forma = new formEngine();
+
+// Создаем экземпляр класса Database
+$database = new Database();
+
+// Создаем экземпляр класса FormEngine и передаем ему экземпляр базы данных
+$forma = new FormEngine($database);
+
+// Вызываем метод send()
 $forma->send();
-
-
+?>

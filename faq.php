@@ -1,32 +1,28 @@
 <?php
 require_once 'faq_read.php';
+require_once 'Database.php';
 
-// Проверяем, залогинен ли пользователь
 session_start();
 if (!isset($_SESSION['user_email'])) {
     header("Location: loginPage.php");
     exit();
 }
 
-// Проверяем, является ли пользователь администратором
 $isAdmin = false;
 if ($_SESSION['user_email'] === 'admin@dudash.mk') {
     $isAdmin = true;
 }
 
-// Pripojenie k databáze
-$db_connection = mysqli_connect("localhost", "root", "", "rivage_db");
+$db = new Database();
+$db_connection = $db->getConnection();
 
-if (mysqli_connect_errno()) {
-    echo "Chyba: " . mysqli_connect_error();
-    exit();
-}
-// Získavanie údajov o otázkach a odpovediach
-$qna_engine = new QnaEngine($db_connection);
-$qna_data = $qna_engine -> getQuestionsAndAnswers();
+$qna_engine = new QnaEngine(); // Убираем передачу соединения в конструктор
+$qna_data = $qna_engine->getQuestionsAndAnswers();
 
-// Ukončenie pripojenia k databáze
-mysqli_close($db_connection);
+// Закрываем соединение с базой данных после использования
+unset($qna_engine);
+$db->closeConnection();
+
 ?>
 <!DOCTYPE html>
 <html lang="sk">

@@ -1,19 +1,13 @@
 <?php
+require_once 'Database.php';
+
 class FormEngine {
-    private $host = "localhost";
-    private $dbname = "rivage_db";
-    private $port = 3306;
-    private $username = "root";
-    private $password = "";
-    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
     private $conn;
 
     public function __construct() {
-        try {
-            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
-        } catch (PDOException $e) {
-            die("Chyba pripojenia: " . $e->getMessage());
-        }
+        // Создаем экземпляр класса Database для подключения к базе данных
+        $db = new Database();
+        $this->conn = $db->getConnection();
     }
 
     public function send() {
@@ -23,12 +17,11 @@ class FormEngine {
             $answer = filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_SPECIAL_CHARS);
 
             if ($id !== false && $question !== false && $answer !== false) {
-                $sql = "UPDATE faq SET question = :question, answer = :answer WHERE id = :id";
+                $sql = "UPDATE faq SET question = ?, answer = ? WHERE id = ?";
                 $statement = $this->conn->prepare($sql);
+                $statement->bind_param("ssi", $question, $answer, $id);
 
-                $update = $statement->execute(array(':question' => $question, ':answer' => $answer, ':id' => $id));
-
-                if ($update) {
+                if ($statement->execute()) {
                     header("Location: http://localhost/rivageHotel/faq.php");
                     exit;
                 } else {
@@ -43,7 +36,7 @@ class FormEngine {
     }
 
     public function __destruct() {
-        $this->conn = null;
+        $this->conn->close(); // Закрываем соединение с базой данных
     }
 }
 

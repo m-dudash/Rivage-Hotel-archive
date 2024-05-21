@@ -15,7 +15,7 @@ class Database {
     }
 
     // Закрываем соединение с базой данных
-    public function __destruct() {
+    public function closeConnection() {
         $this->connection->close();
     }
 

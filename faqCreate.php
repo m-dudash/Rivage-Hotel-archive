@@ -1,19 +1,13 @@
 <?php
-class formEngine {
-    private $host = "localhost";
-    private $dbname = "rivage_db";
-    private $port = 3306;
-    private $username = "root";
-    private $password = "";
-    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
+require_once 'Database.php';
+
+class FormEngine {
     private $conn;
 
     public function __construct() {
-        try {
-            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->username, $this->password, $this->options);
-        } catch (PDOException $e) {
-            die("Chyba pripojenia: " . $e->getMessage());
-        }
+        // Создаем экземпляр класса Database для подключения к базе данных
+        $db = new Database();
+        $this->conn = $db->getConnection();
     }
 
     public function send() {
@@ -21,12 +15,12 @@ class formEngine {
         $answer = filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if ($question !== false && $answer !== false) {
-            $sql = "INSERT INTO faq (question, answer) VALUES (:question, :answer)";
+            $sql = "INSERT INTO faq (question, answer) VALUES (?, ?)";
             $statement = $this->conn->prepare($sql);
 
-            $insert = $statement->execute(array(':question' => $question, ':answer' => $answer));
+            $insert = $statement->bind_param("ss", $question, $answer); // Заменили параметры в запросе на плейсхолдеры и использовали bind_param
 
-            if ($insert) {
+            if ($statement->execute()) {
                 header("Location: http://localhost/rivageHotel/faq.php");
                 exit;
             } else {
@@ -38,10 +32,10 @@ class formEngine {
     }
 
     public function __destruct() {
-        $this->conn = null;
+        $this->conn->close(); // Закрываем соединение с базой данных
     }
 }
-$forma = new formEngine();
+
+$forma = new FormEngine();
 $forma->send();
-
-
+?>

@@ -1,18 +1,19 @@
 <?php
-require_once 'faq_read.php';
+require_once 'Database.php';
 
 class QnaDeleter {
-    private $db_connection;
+    private $conn;
 
-    public function __construct($db_connection) {
-        $this->db_connection = $db_connection;
+    public function __construct($conn) {
+        $this->conn = $conn;
     }
 
     public function deleteQna($id) {
-        $delete_query = "DELETE FROM faq WHERE id = $id";
-        $delete_result = mysqli_query($this->db_connection, $delete_query);
+        $delete_query = "DELETE FROM faq WHERE id = ?";
+        $statement = $this->conn->prepare($delete_query);
+        $statement->bind_param("i", $id);
 
-        if ($delete_result) {
+        if ($statement->execute()) {
             return true;
         } else {
             return false;
@@ -25,16 +26,12 @@ if (isset($_GET['id'])) {
     // Получаем ID для удаления
     $id = $_GET['id'];
 
-    // Подключаемся к базе данных
-    $db_connection = mysqli_connect("localhost", "root", "", "rivage_db");
-
-    if (mysqli_connect_errno()) {
-        echo "Chyba: " . mysqli_connect_error();
-        exit();
-    }
+    // Создаем экземпляр класса Database для подключения к базе данных
+    $db = new Database();
+    $conn = $db->getConnection();
 
     // Создаем экземпляр класса QnaDeleter
-    $qna_deleter = new QnaDeleter($db_connection);
+    $qna_deleter = new QnaDeleter($conn);
 
     // Вызываем метод deleteQna для удаления
     if ($qna_deleter->deleteQna($id)) {
@@ -45,9 +42,6 @@ if (isset($_GET['id'])) {
         // Если произошла ошибка при удалении, выводим сообщение об ошибке
         echo "Error: Unable to delete Q&A.";
     }
-
-    // Закрываем соединение с базой данных
-    mysqli_close($db_connection);
 } else {
     // Если ID не был отправлен, выводим сообщение об ошибке
     echo "ID not provided for deletion.";
