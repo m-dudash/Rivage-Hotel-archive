@@ -7,7 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>footer</title>
     <link rel="stylesheet" href="css/main.css" />
-
+    <style>
+        .foot-a a {
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
 <footer>
@@ -25,14 +29,6 @@
         <a href="gallery.php" target="_blank">|&nbsp;Galéria</a>
         <a href="faq.html">|&nbsp;FAQ</a>
     </div>
-<!--    <div class="foot-a">-->
-<!--        <a href="mailto:mykhailo@dudash.ukf"-->
-<!--        ><img src="img/mail.png" alt="" class="pics" style="width: 40px"-->
-<!--            /></a>-->
-<!--        <a href="tel:+380989762400">-->
-<!--            <img src="img/tel.png" alt="" class="pics" style="width: 40px"-->
-<!--            /></a>-->
-<!--    </div>-->
 </footer>
 </body>
 </html>

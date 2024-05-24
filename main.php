@@ -17,7 +17,8 @@
 </head>
 <body>
 <!-- HEADER -->
-<?php include 'components/header.php'?>
+<?php include 'components/header.php'
+?>
 
 <main>
     <div class="container" id="main" style="padding-top: 40px">
@@ -133,62 +134,73 @@
 
     <br /><br />
     <!-- KREATIVNE - NAPISAT REVIEW-->
+    <!-- KREATIVNE - NAPISAT REVIEW-->
     <div style="display: flex; justify-content: center">
-        <a href="https://www.booking.com/" target="_blank" class="mr-2">
+        <a href="reviews.php" target="_blank" class="mr-2">
             <button class="more">MORE</button>
         </a>
-        <button
-                class="more"
-                data-bs-toggle="modal"
-                data-bs-target="#writeReviewModal"
-        >
+        <button class="more" data-bs-toggle="modal" data-bs-target="#writeReviewModal">
             WRITE REVIEW
         </button>
     </div>
+
     <div id="writeReviewModal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered rev-modal">
             <div class="modal-content" style="padding: 20px">
                 <div class="modal-header">
                     <h5 class="thm" style="font-size: 2em">Napíšte recenziu</h5>
-                    <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label
-                                for="reviewText"
-                                style="
-                    font-family: 'Montserrat';
-                    font-weight: 100;
-                    font-size: 1.2em;
-                  "
-                        ><p><i>Napíšte recenziu svojho pobytu v Rivage Hotel</i></p>
-                        </label>
-                        <textarea
-                                class="form-control"
-                                id="reviewText"
-                                rows="7"
-                                required
-                        ></textarea>
-                        <br />
-                    </div>
-                    <button
-                            type="odoslat"
-                            class="btn btn-primary btn-send-form"
-                            onclick="closeRev()"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    >
-                        Odoslať recenziu
-                    </button>
+                    <form action="reviewEngine.php" method="post">
+                        <div class="mb-3">
+                            <label for="reviewText" style="font-family: 'Montserrat'; font-weight: 100; font-size: 1.2em">
+                                <p><i>Napíšte recenziu svojho pobytu v Rivage Hotel</i></p>
+                            </label>
+                            <textarea class="form-control" id="reviewText" name="reviewText" rows="7" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label style="font-family: 'Montserrat'; font-weight: 100; font-size: 1.2em">Hodnotenie (1-10):</label>
+                            <div class="rating">
+                                <input type="radio" id="star10" name="rating" value="10">
+                                <label for="star10" class="rating-label">10</label>
+
+                                <input type="radio" id="star9" name="rating" value="9">
+                                <label for="star9" class="rating-label">9</label>
+
+                                <input type="radio" id="star8" name="rating" value="8">
+                                <label for="star8" class="rating-label">8</label>
+
+                                <input type="radio" id="star7" name="rating" value="7">
+                                <label for="star7" class="rating-label">7</label>
+
+                                <input type="radio" id="star6" name="rating" value="6">
+                                <label for="star6" class="rating-label">6</label>
+
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5" class="rating-label">5</label>
+
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4" class="rating-label">4</label>
+
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3" class="rating-label">3</label>
+
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2" class="rating-label">2</label>
+
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1" class="rating-label">1</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-send-form" aria-label="Submit">Odoslať recenziu</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
     <br /><br /><br /><br />
     <hr />
     <br />
