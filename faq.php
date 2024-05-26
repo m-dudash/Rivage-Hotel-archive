@@ -43,7 +43,12 @@ $db->closeConnection();
 <!-- HEADER -->
 <?php include 'components/header.php'?>
 <main>
-    <br><br><br><br>
+    <br><br><br>
+
+    <div class="mpic" id="reservation">
+        <h1 style="font-size: 1.2em"><b>FAQ </b></h1>
+    </div>
+    <br /><br><br>
     <!-- Код для вывода вопросов и ответов -->
     <div class="accordion" id="accordionExample">
         <?php foreach ($qna_data as $index => $qna) { ?>

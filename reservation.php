@@ -79,25 +79,25 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
       <div class="offers">
         <!-- LARGE LUXE -->
         <div class="container" id="main">
-          <div class="centered">LARGE LUXE</div>
+          <div class="centered" style="top: 16vw">LARGE LUXE</div>
           <img src="img/reservation/img4.png" alt="Amsterdam" />
           <div class="details">
-            <form action="idk">
+            <form action="reservationEngine.php" method="post">
               <div style="display: flex; flex-direction: column">
                 <label for="name">MENO HLAVNÉHO HOSŤA: </label>
-                <input class="inp" type="text" id="name" />
+                <input class="inp" type="text" name="name" id="name" />
                 <label for="cislo">KONTAKTNÉ TELEFÓNNE ČÍSLO:</label>
-                <input class="inp" type="tel" id="cislo" />
+                <input class="inp" type="tel" name="phone" id="cislo" />
                 <label for="mail">E-MAIL:</label>
-                <input class="inp" type="email" id="mail" />
+                <input class="inp" type="email"  name="email" id="mail" />
               </div>
               <div
                 style="display: flex; flex-direction: column; margin-left: 8%"
               >
                 <label for="from">DÁTUM PRÍCHODU:</label>
-                <input class="inp" type="date" id="from" />
+                <input class="inp" type="date"  name="arrival_date" id="from" />
                 <label for="to">DÁTUM ODCHODU:</label>
-                <input class="inp" type="date" id="to" />
+                <input class="inp" type="date" name="departure_date" id="to" />
               </div>
               <div
                 style="
@@ -116,7 +116,7 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                   <option value="5">5</option>
                 </select>
                 <label for="pets">PETS:</label>
-                <input class="chek" type="checkbox" id="pets" />
+                <input class="chek" type="checkbox" name="pets" id="pets" />
               </div>
               <div
                 style="
@@ -126,10 +126,10 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                   align-items: center;
                 "
               >
-                <label for="karta">KARTOU</label>
-                <input class="rd" type="radio" id="karta" name="pay" />
-                <label for="hot">V HOTOVOSTI</label>
-                <input class="rd" type="radio" id="hot" name="pay" />
+                  <label for="karta1">KARTOU</label>
+                  <input class="rd" type="radio" id="karta1" name="payment_method" value="card"/>
+                  <label for="hot1">V HOTOVOSTI</label>
+                  <input class="rd" type="radio" id="hot1" name="payment_method" value="cash" />
               </div>
               <button>RESERVE</button>
             </form>
@@ -137,25 +137,25 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
         </div>
         <!-- KARPATSKA CHATA -->
         <div class="container">
-          <div class="centered">CARPATHIAN HOUSE</div>
+          <div class="centered" style="top: 16vw">CARPATHIAN HOUSE</div>
           <img src="img/reservation/img3.png" alt="Amsterdam" />
           <div class="details">
-            <form action="id">
+            <form action="reservationEngine.php" method="post">
               <div style="display: flex; flex-direction: column">
                 <label for="name1">MENO HLAVNÉHO HOSŤA: </label>
                 <input class="inp" type="text" id="name1" />
                 <label for="cislo1">KONTAKTNÉ TELEFÓNNE ČÍSLO:</label>
-                <input class="inp" type="tel" id="cislo1" />
+                <input class="inp" type="tel" id="cislo1" name="phone" />
                 <label for="mail1">E-MAIL:</label>
-                <input class="inp" type="email" id="mail1" />
+                <input class="inp" type="email" id="mail1" name="email" />
               </div>
               <div
                 style="display: flex; flex-direction: column; margin-left: 8%"
               >
                 <label for="from1">DÁTUM PRÍCHODU:</label>
-                <input class="inp" type="date" id="from1" />
+                <input class="inp" type="date" id="from1" name="arrival_date" />
                 <label for="to1">DÁTUM ODCHODU:</label>
-                <input class="inp" type="date" id="to1" />
+                <input class="inp" type="date" id="to1"  name="departure_date" />
               </div>
               <div
                 style="
@@ -174,7 +174,7 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                   <option value="5">5</option>
                 </select>
                 <label for="pets1">PETS:</label>
-                <input class="chek" type="checkbox" id="pets1" />
+                <input class="chek" type="checkbox" id="pets1" name="pets" />
               </div>
               <div
                 style="
@@ -185,9 +185,9 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                 "
               >
                 <label for="karta1">KARTOU</label>
-                <input class="rd" type="radio" id="karta1" name="pay1" />
+                <input class="rd" type="radio" id="karta1" name="payment_method" value="card" />
                 <label for="hot1">V HOTOVOSTI</label>
-                <input class="rd" type="radio" id="hot1" name="pay1" />
+                <input class="rd" type="radio" id="hot1" name="payment_method" value="cash" />
               </div>
               <button>RESERVE</button>
             </form>
@@ -195,25 +195,25 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
         </div>
         <!-- AMSTERDAM CLASSIC -->
         <div class="container">
-          <div class="centered">AMSTERDAM CLASSIC</div>
+          <div class="centered" style="top: 16vw">AMSTERDAM CLASSIC</div>
           <img src="img/reservation/img0.png" alt="Amsterdam" />
           <div class="details">
-            <form action="idk">
+            <form action="reservationEngine.php" method="post">
               <div style="display: flex; flex-direction: column">
                 <label for="name2">MENO HLAVNÉHO HOSŤA: </label>
-                <input class="inp" type="text" id="name2" />
+                <input class="inp" type="text" id="name2" name="name"/>
                 <label for="cislo2">KONTAKTNÉ TELEFÓNNE ČÍSLO:</label>
-                <input class="inp" type="tel" id="cislo2" />
+                <input class="inp" type="tel" id="cislo2" name="phone"/>
                 <label for="mail2">E-MAIL:</label>
-                <input class="inp" type="email" id="mail2" />
+                <input class="inp" type="email" id="mail2" name="email" />
               </div>
               <div
                 style="display: flex; flex-direction: column; margin-left: 8%"
               >
                 <label for="from2">DÁTUM PRÍCHODU:</label>
-                <input class="inp" type="date" id="from2" />
+                <input class="inp" type="date" id="from2" name="arrival_date"/>
                 <label for="to2">DÁTUM ODCHODU:</label>
-                <input class="inp" type="date" id="to2" />
+                <input class="inp" type="date" id="to2"  name="departure_date" />
               </div>
               <div
                 style="
@@ -232,7 +232,7 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                   <option value="5">5</option>
                 </select>
                 <label for="pets2">PETS:</label>
-                <input class="chek" type="checkbox" id="pets2" />
+                <input class="chek" type="checkbox" id="pets2" name="pets"  />
               </div>
               <div
                 style="
@@ -243,9 +243,9 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                 "
               >
                 <label for="karta2">KARTOU</label>
-                <input class="rd" type="radio" id="karta2" name="pay2" />
+                <input class="rd" type="radio" id="karta2" name="payment_method" value="card" />
                 <label for="hot2">V HOTOVOSTI</label>
-                <input class="rd" type="radio" id="hot2" name="pay2" />
+                <input class="rd" type="radio" id="hot2" name="payment_method" value="cash" />
               </div>
               <button>RESERVE</button>
             </form>
@@ -253,25 +253,25 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
         </div>
         <!-- NEW WEST -->
         <div class="container">
-          <div class="centered">NEW WEST</div>
+          <div class="centered" style="top: 16vw">NEW WEST</div>
           <img src="img/reservation/img2.png" alt="Amsterdam" />
           <div class="details">
-            <form action="idk">
+            <form action="reservationEngine.php" method="post">
               <div style="display: flex; flex-direction: column">
                 <label for="name3">MENO HLAVNÉHO HOSŤA: </label>
-                <input class="inp" type="text" id="name3" />
+                <input class="inp" type="text" id="name3" name="name"/>
                 <label for="cislo3">KONTAKTNÉ TELEFÓNNE ČÍSLO:</label>
-                <input class="inp" type="tel" id="cislo3" />
+                <input class="inp" type="tel" id="cislo3" name="phone"/>
                 <label for="mail3">E-MAIL:</label>
-                <input class="inp" type="email" id="mail3" />
+                <input class="inp" type="email" id="mail3" name="email"/>
               </div>
               <div
                 style="display: flex; flex-direction: column; margin-left: 8%"
               >
                 <label for="from3">DÁTUM PRÍCHODU:</label>
-                <input class="inp" type="date" id="from3" />
+                <input class="inp" type="date" id="from3" name="arrival_date"/>
                 <label for="to3">DÁTUM ODCHODU:</label>
-                <input class="inp" type="date" id="to3" />
+                <input class="inp" type="date" id="to3"  name="departure_date"  />
               </div>
               <div
                 style="
@@ -290,7 +290,7 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                   <option value="5">5</option>
                 </select>
                 <label for="pets3">PETS:</label>
-                <input class="chek" type="checkbox" id="pets3" />
+                <input class="chek" type="checkbox" id="pets3" name="pets" />
               </div>
               <div
                 style="
@@ -301,9 +301,9 @@ $show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_m
                 "
               >
                 <label for="karta3">KARTOU</label>
-                <input class="rd" type="radio" id="karta3" name="pay3" />
+                <input class="rd" type="radio" id="karta3" name="payment_method" value="card"/>
                 <label for="hot3">V HOTOVOSTI</label>
-                <input class="rd" type="radio" id="hot3" name="pay3" />
+                <input class="rd" type="radio" id="hot3" name="payment_method" value="cash" />
               </div>
               <button>RESERVE</button>
             </form>
