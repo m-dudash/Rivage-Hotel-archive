@@ -4,13 +4,25 @@ require_once 'UserEngine.php';
 $userEngine = new UserEngine();
 
 $user_email = "";
+$user_name = ""; // Переменная для имени пользователя
 $login_link = '<a class="nav-link" style="margin-left: 14%; color: #500505; white-space: nowrap;" aria-current="page" href="loginPage.php">|&nbsp;MyRivage</a>';
 
 if ($userEngine->isLoggedIn()) {
     $user_email = htmlspecialchars($_SESSION['user_email']);
-    $login_link = '<a class="nav-link" style="margin-left: 10%; color:#500505; font-size: 120%; white-space: nowrap;" aria-current="page" href="profile.php">|&nbsp;' . $user_email . '</a>';
+    $user_id = $_SESSION['user_id'];
+
+    // Получаем имя пользователя из базы данных
+    $user_name = $userEngine->getUserName($user_id);
+
+    // Если имя пользователя не пустое, используем его, иначе используем электронную почту
+    if (!empty($user_name)) {
+        $login_link = '<a class="nav-link" style="margin-left: 10%; color:#500505; font-size: 120%; white-space: nowrap;" aria-current="page" href="profile.php">|&nbsp;' . $user_name . '</a>';
+    } else {
+        $login_link = '<a class="nav-link" style="margin-left: 10%; color:#500505; font-size: 120%; white-space: nowrap;" aria-current="page" href="profile.php">|&nbsp;' . $user_email . '</a>';
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

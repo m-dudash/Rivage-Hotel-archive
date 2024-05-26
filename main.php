@@ -139,9 +139,20 @@
         <a href="reviews.php" target="_blank" class="mr-2">
             <button class="more">MORE</button>
         </a>
-        <button class="more" data-bs-toggle="modal" data-bs-target="#writeReviewModal">
-            WRITE REVIEW
-        </button>
+        <?php
+        // Проверяем, активна ли сессия
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Проверяем, залогинен ли пользователь (предполагая, что есть переменная сессии user_id)
+        $isLoggedIn = isset($_SESSION['user_id']);
+
+        // Если пользователь залогинен, отображаем кнопку "WRITE REVIEW"
+        if ($isLoggedIn) {
+            echo '<button class="more" data-bs-toggle="modal" data-bs-target="#writeReviewModal">WRITE REVIEW</button>';
+        }
+        ?>
     </div>
 
     <div id="writeReviewModal" class="modal" tabindex="-1">

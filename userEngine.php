@@ -74,6 +74,30 @@ class UserEngine {
             return "Error: " . $stmt->error;
         }
     }
+    public function updateName($email, $new_name) {
+        $stmt = $this->conn->prepare("UPDATE users SET name = ? WHERE email = ?");
+        $stmt->bind_param("ss", $new_name, $email);
+
+        if ($stmt->execute()) {
+            return "Success";
+        } else {
+            return "Error: " . $stmt->error;
+        }
+    }
+    public function getUserName($user_id) {
+        // Подготавливаем запрос к базе данных для получения имени пользователя
+        $query = "SELECT name FROM users WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt === false) {
+            return "Prepare failed: " . $this->conn->error;
+        }
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $userData = $result->fetch_assoc();
+        return $userData['name'];
+    }
+
 
     public function isLoggedIn() {
         return isset($_SESSION['user_id']);

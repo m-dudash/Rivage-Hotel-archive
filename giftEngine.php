@@ -15,6 +15,11 @@ class GiftEngine {
         $insert = $statement->execute();
 
         if ($insert) {
+            // Подарок успешно отправлен, устанавливаем флаг в сессии
+            session_start();
+            $_SESSION['gift_modal_accepted'] = true;
+
+            // Перенаправляем пользователя на главную страницу
             header("Location: http://localhost/rivageHotel/main.php");
             exit;
         } else {

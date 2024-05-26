@@ -1,3 +1,10 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+// Проверяем, установлен ли флаг в сессии
+$show_gift_modal = !isset($_SESSION['gift_modal_accepted']) || $_SESSION['gift_modal_accepted'] !== true;
+?>
 <!DOCTYPE html>
 <html lang="sk">
   <head>
@@ -17,6 +24,7 @@
     <!-- HEADER -->
     <?php include 'components/header.php'?>
     <!-- KREATIVNE - POPUP -->
+    <?php if ($show_gift_modal) : ?>
     <div class="modaldarcek" id="darcekModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -31,24 +39,24 @@
               na dovolenku v centre Amsterdamu v Rivage Hotel v pohodlí a
               harmónii.
             </p>
-            <form action="giftEngine.php", method="post">
+            <form action="giftEngine.php" method="post">
               <input
                 type="text"
                 class="inp"
                 name="mobile"
                 placeholder="Zadajte svoj e-mail alebo telefónne číslo"
               />
-                <button
-                        type="submit"
-                        class="btn btn-primary"
-                        onclick="acceptDarcek()"
-                >
-                    Prijať
-                </button>
-            </form>
+
+
           </div>
           <div class="modal-footer">
-
+              <button
+                      type="submit"
+                      class="btn btn-primary"
+                      onclick="acceptDarcek()"
+              >
+                  Prijať
+              </button>
             <button
               type="button"
               class="btn btn-secondary"
@@ -60,6 +68,8 @@
         </div>
       </div>
     </div>
+        </form>
+    <?php endif; ?>
     <main>
       <br /><br /><br />
       <div class="mpic" id="reservation">

@@ -12,9 +12,10 @@ class ReviewEngine {
         $db = new Database();
         $this->conn = $db->getConnection();
     }
+
     public function getAllReviews() {
-        // Выполняем запрос к базе данных для получения всех отзывов
-        $query = "SELECT reviews.rating, users.email, reviews.content, reviews.review_date
+        // Выполняем запрос к базе данных для получения всех отзывов с именем пользователя, если оно есть
+        $query = "SELECT reviews.rating, users.email, users.name, reviews.content, reviews.review_date
                   FROM reviews
                   JOIN users ON reviews.user_id = users.id";
         $result = $this->conn->query($query);

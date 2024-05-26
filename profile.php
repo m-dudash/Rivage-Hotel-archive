@@ -36,6 +36,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['new_password'])) {
         $update_message = "Failed to update password. Please try again.";
     }
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['new_name'])) {
+    $new_name = $_POST['new_name'];
+
+    // Обновляем имя пользователя
+    $userEngine = new UserEngine();
+    $update_name_result = $userEngine->updateName($user_email, $new_name);
+
+    if ($update_name_result === "Success") {
+        $update_name_message = "Name updated successfully.";
+    } else {
+        $update_name_message = "Failed to update name. Please try again.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +80,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['new_password'])) {
     </form>
     <?php if (isset($update_message)): ?>
         <p><?php echo $update_message; ?></p>
+    <?php endif; ?>
+    <br>
+    <form method="post" action="">
+        <label for="new_name" style="margin-right: 20px">Enter your name:</label>
+        <input style="margin-right: 20px" type="text" id="new_name" name="new_name" required>
+        <button type="submit">Save</button>
+    </form>
+    <?php if (isset($update_name_message)): ?>
+        <p><?php echo $update_name_message; ?></p>
     <?php endif; ?>
     <!-- Форма для кнопки logout -->
     <br><br><br>
